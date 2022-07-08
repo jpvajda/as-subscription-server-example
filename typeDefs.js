@@ -4,11 +4,11 @@ export const typeDefs = gql`
   # a book object
   type Book {
     "the title of the book"
-    title: String!
+    title: String
     "the author of the book"
     author: String
     "the unique ID of the book"
-    id: Int!
+    id: Int
     "if the book is in stock or not"
     available: Boolean
   }
@@ -20,20 +20,17 @@ export const typeDefs = gql`
 
   # an input type to be reused where needed
   input NewBookInput {
-    title: String!
+    title: String
     author: String
-    id: Int!
+    id: Int
     available: Boolean
   }
 
   # A mutation to create a new book
   type Mutation {
     createBook(input: NewBookInput): Book
-    updateBook(input:NewBookInput): Book {
-    }
+    updateBook(input: NewBookInput): Book
   }
-
-
 
   # # A subscription that can be used when a new book is created
   # type Subscription {
