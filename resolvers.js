@@ -15,12 +15,10 @@ export const resolvers = {
   },
   Mutation: {
     createBook: (parent, args) => {
-      let idCount = link.length;
-
       const book = {
         title: args.title,
         author: args.author,
-        id: `book-${idCount++}`,
+        id: args.id,
         available: args.available,
       };
       books.push(book);
