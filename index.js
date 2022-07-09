@@ -7,7 +7,7 @@ import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
 import { typeDefs } from "./typeDefs.js";
 import { resolvers } from "./resolvers.js";
-
+import { PubSub } from "graphql-subscriptions";
 // SERVER SETUP//
 
 // Create the schema, which will be used separately by ApolloServer and
@@ -27,9 +27,13 @@ const wsServer = new WebSocketServer({
 // Save the returned server's info so we can shutdown this server later
 const serverCleanup = useServer({ schema }, wsServer);
 
+// a pubsub instanced used for subscriptions
+const pubsub = new PubSub();
+
 // Set up ApolloServer.
 const server = new ApolloServer({
   schema,
+  context: ({ req, res }) => ({ req, res, pubsub }),
   csrfPrevention: true,
   cache: "bounded",
   plugins: [

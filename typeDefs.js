@@ -18,22 +18,14 @@ export const typeDefs = gql`
     books: [Book]
   }
 
-  # an input type to be reused where needed
-  input NewBookInput {
-    title: String
-    author: String
-    id: Int
-    available: Boolean
-  }
-
   # A mutation to create a new book
   type Mutation {
-    createBook(input: NewBookInput): Book
-    updateBook(input: NewBookInput): Book
+    createBook(title: String, author: String, id: Int, available: Boolean): Book
+    updateBook(title: String, author: String, id: Int, available: Boolean): Book
   }
 
-  # # A subscription that can be used when a new book is created
-  # type Subscription {
-  #   BookCreated: Post
-  # }
+  # A subscription that can be used when a new book is created
+  type Subscription {
+    newBook: Book!
+  }
 `;
