@@ -1,3 +1,7 @@
+import { PubSub } from "graphql-subscriptions";
+
+const pubsub = new PubSub();
+
 let books = [
   {
     title: "The Awakening",
@@ -16,7 +20,7 @@ export const resolvers = {
     },
   },
   Mutation: {
-    createBook: (parent, args, { pubsub }) => {
+    createBook: (parent, args) => {
       const book = {
         title: args.title,
         author: args.author,
@@ -25,15 +29,13 @@ export const resolvers = {
       };
       books.push(book);
 
-      pubsub.publish(NEW_BOOK, {
-        newBook: book,
-      });
+      pubsub.publish("NEW_BOOK", { newBook: args });
       return book;
     },
   },
   Subscription: {
     newBook: {
-      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(NEW_BOOK),
+      subscribe: () => pubsub.asyncIterator(["NEW_BOOK"]),
     },
   },
 };
