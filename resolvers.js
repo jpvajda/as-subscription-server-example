@@ -11,8 +11,6 @@ let books = [
   },
 ];
 
-const NEW_BOOK = "NEW_BOOK";
-
 export const resolvers = {
   Query: {
     books: () => {
